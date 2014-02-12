@@ -1,4 +1,6 @@
-from django.contrib.sitemaps import Sitemap
+from django.contrib.sitemaps import Sitemap, Site
+from django.core.exceptions import ImproperlyConfigured
+
 
 class RequestSitemap(Sitemap):
     def __init__(self, request=None):

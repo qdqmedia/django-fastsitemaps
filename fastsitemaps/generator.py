@@ -2,9 +2,7 @@ try:
     from cStringIO import StringIO
 except ImportError:
     from StringIO import StringIO
-from django.http import HttpResponse
 from django.utils.xmlutils import SimplerXMLGenerator
-from django.utils.encoding import smart_unicode
 from django.conf import settings
 from sitemaps import RequestSitemap
 
