@@ -83,7 +83,10 @@ class TranslationSitemapMixin(object):
     """
     def _get_urlinfo(self, item, site):
         url_info = super(TranslationSitemapMixin, self)._get_urlinfo(item, site)
-        url_info["translations"] = self._get("translations", item, None)
+        url_info["translations"] = {
+            lang:  uri if uri.startswith('http') else "http://%s%s" % (site.domain, uri)
+            for lang, uri in self._get("translations", item, {}).items()
+        }
         return url_info
 
     @classmethod
