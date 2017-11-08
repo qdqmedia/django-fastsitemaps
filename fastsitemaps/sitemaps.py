@@ -1,9 +1,13 @@
+# -*- coding: utf-8 -*-
 from django.contrib.sitemaps import Sitemap
+from django.core.exceptions import ImproperlyConfigured
+from django.contrib.sites.models import Site
+
 
 class RequestSitemap(Sitemap):
     def __init__(self, request=None):
         self.request = request
-        
+
     def __get(self, name, obj, default=None):
         try:
             attr = getattr(self, name)
@@ -22,7 +26,10 @@ class RequestSitemap(Sitemap):
                 except Site.DoesNotExist:
                     pass
             if site is None:
-                raise ImproperlyConfigured("In order to use Sitemaps you must either use the sites framework or pass in a Site or RequestSite object in your view code.")
+                raise ImproperlyConfigured(
+                    "In order to use Sitemaps you must either use the sites framework or pass in "
+                    "a Site or RequestSite object in your view code."
+                )
         for item in self.paginator.page(page).object_list:
             loc = self.__get('location', item)
             if not loc.startswith('http'):
