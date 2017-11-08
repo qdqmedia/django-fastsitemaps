@@ -1,32 +1,37 @@
+from distutils.core import setup
+from distutils.command.install import INSTALL_SCHEMES
 import os
-from setuptools import setup
 
-README = open(os.path.join(os.path.dirname(__file__), 'README.md')).read()
+root = os.path.dirname(os.path.abspath(__file__))
+os.chdir(root)
 
-# allow setup.py to be run from any path
-os.chdir(os.path.normpath(os.path.join(os.path.abspath(__file__), os.pardir)))
+VERSION = '0.3'
+
+# Make data go to the right place.
+# http://groups.google.com/group/comp.lang.python/browse_thread/thread/35ec7b2fed36eaec/2105ee4d9e8042cb
+for scheme in INSTALL_SCHEMES.values():
+    scheme['data'] = scheme['purelib']
+
 
 setup(
     name='django-fastsitemaps',
-    version='0.1',
+    version=VERSION,
+    description="Fast, streaming sitemaps for Django",
+    long_description="Drop-in replacement for django.contrib.sitemaps that gives you fast, streaming sitemaps that consume minimal memory (O^1 instead of O^n) and minimal server response time on huge data sets.",
+    author="Simon Litchfield",
+    author_email="simon@s29.com.au",
+    url="http://github.com/litchfield/django-fastsitemaps",
+    license="MIT License",
+    platforms=["any"],
     packages=['fastsitemaps'],
-    include_package_data=True,
-    license='',  # TODO
-    description='Streaming version of django.contrib.sitemaps, drop-in replacement',
-    long_description=README,
-    url='https://github.com/litchfield/django-fastsitemaps',
-    author='litchfield',
-    # author_email='yourname@example.com',
+    #data_files=[(template_dir, templates)],
     classifiers=[
-        'Environment :: Web Environment',
-        'Framework :: Django',
-        'Intended Audience :: Developers',
-        'License :: OSI Approved :: BSD License', # example license
-        'Operating System :: OS Independent',
-        'Programming Language :: Python',
-        'Programming Language :: Python :: 2.6',
-        'Programming Language :: Python :: 2.7',
-        'Topic :: Internet :: WWW/HTTP',
-        'Topic :: Internet :: WWW/HTTP :: Dynamic Content',
-    ],
+        "Development Status :: 3 - Alpha",
+        "Environment :: Web Environment",
+        "Intended Audience :: Developers",
+        "License :: OSI Approved :: MIT License",
+        "Operating System :: OS Independent",
+        "Programming Language :: Python",
+        "Framework :: Django",
+    ]
 )
