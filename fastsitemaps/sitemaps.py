@@ -33,7 +33,8 @@ class RequestSitemap(Sitemap):
         for item in self.paginator.page(page).object_list:
             loc = self.__get('location', item)
             if not loc.startswith('http'):
-                loc = "http://%s%s" % (site.domain, loc)
+                protocol = 'https' if self.request.is_secure() else 'http'
+                loc = "%s://%s%s" % (protocol, site.domain, loc)
             priority = self.__get('priority', item, None)
             url_info = {
                 'item':       item,
